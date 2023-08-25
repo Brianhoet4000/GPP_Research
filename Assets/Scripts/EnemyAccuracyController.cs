@@ -11,10 +11,10 @@ public class EnemyAccuracyController : MonoBehaviour
     [SerializeField]
     private GameObject m_PlayerRef;
     private Rigidbody m_PlayerRigidBody;
-    private float m_ExtraOffsetMinX = 0.5f;
-    private float m_ExtraOffsetMaxX = 2.0f;
-    private float m_ExtraOffsetMinY = 0.2f;
-    private float m_ExtraOffsetMaxY = 0.8f;
+    private float m_ExtraOffsetMinX = 4.0f;
+    private float m_ExtraOffsetMaxX = 12.0f;
+    private float m_ExtraOffsetMinY = 0.6f;
+    private float m_ExtraOffsetMaxY = 1.3f;
     private float m_PlayerHeightOffset;
     private float m_PlayerWidthOffset;
 
@@ -97,8 +97,8 @@ public class EnemyAccuracyController : MonoBehaviour
 
         float angle = Vector3.Angle(vectorPlayerToEnemy, velocityVect);
 
-        const float closerAngle = 10.0f;
-        const float furtherAngle = 140.0f; //Vector3.Angle can never return a value greater than 180
+        const float closerAngle = 3.0f;
+        const float furtherAngle = 160.0f; //Vector3.Angle can never return a value greater than 180
         if(angle > furtherAngle)
         {
             //player is running away from the enemy
