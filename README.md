@@ -22,4 +22,24 @@ Imagine a single token for the entire game. This means only one AI can shoot at 
 
 In essence, while this method avoids one-hit kills, it could result in odd behavior where AIs seem to be in perfect positions for shots but don't take them due to the turn-based system.
 
-  
+## Implementation
+
+I've successfully translated the theory into a functional Unity project, complete with a visual representation of distance through a dynamic spotlight. As the player approaches the 20-meter mark, the spotlight transitions from green to yellow, and then to red at the 10-meter mark. Additionally, players can observe their health decreasing through a health bar when they are hit.
+
+My implementation features two distinct rules. The first rule is based on the distance between the player and the enemy. This rule employs the changing spotlight colors as a multiplier. As the player gets closer, the multiplier escalates, effectively impacting AI behavior.
+
+The second rule accounts for the player's velocity and movement direction relative to the enemy. If the player is moving toward the enemy, the AI behavior is influenced one way. Conversely, if the player is moving away, the behavior shifts accordingly.
+
+![HitDelay](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/964c4011-8b15-417b-bf73-f1c9484a9a37)
+
+To provide you with a visual understanding, I've included graphs below that depict the multiplier variations in accordance with the aforementioned rules. This visual aid serves to elucidate how the AI behavior adapts based on distance and player movement, enriching the overall gaming experience.
+
+![DistanceRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/987e7f99-b66f-457b-aff3-afe6256bbab1)
+![VelocityRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/ad55ab33-c577-4af2-919f-0bcb4f91477a)
+
+
+
+Source:
+
+https://core.ac.uk/download/pdf/33504361.pdf
+https://www.gameaipro.com/GameAIPro3/GameAIPro3_Chapter33_Using_Your_Combat_AI_Accuracy_to_Balance_Difficulty.pdf
