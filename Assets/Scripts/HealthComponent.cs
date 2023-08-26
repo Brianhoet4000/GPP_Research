@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class HealthComponent : MonoBehaviour
 {
     [SerializeField] private int m_Health;
-    private int m_MaxHealth = 10;
+    private int m_MaxHealth = 100;
     public UIHealth m_UIHealth;
     public int GetHealth()
     {
