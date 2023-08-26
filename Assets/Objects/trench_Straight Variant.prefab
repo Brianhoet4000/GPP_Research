@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 795579adce18ce648a730c757c571beb, type: 2}
     - target: {fileID: 919132149155446097, guid: d017f22d0d5f3784a926769a683d3b4c, type: 3}
       propertyPath: m_Name
-      value: trench_Straight
+      value: trench_Straight Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d017f22d0d5f3784a926769a683d3b4c, type: 3}
       propertyPath: m_Layer
@@ -156,9 +156,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1e89efc890d95384b9e6f8e5f3b71e3f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ae841ae7551c6d640a589c166506ec9b, type: 2}
     - target: {fileID: 919132149155446097, guid: 1e89efc890d95384b9e6f8e5f3b71e3f, type: 3}
       propertyPath: m_Name
       value: trench_StraightPlanks
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e89efc890d95384b9e6f8e5f3b71e3f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e89efc890d95384b9e6f8e5f3b71e3f, type: 3}
+      propertyPath: m_TagString
+      value: Level
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e89efc890d95384b9e6f8e5f3b71e3f, type: 3}

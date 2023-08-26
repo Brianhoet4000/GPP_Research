@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class EnemyAccuracyController : MonoBehaviour
 {
     private float m_TimeToNextHit = 0.0f;
-    private const float m_BaseHitDelay = 2.5f;
+    private const float m_BaseDelay = 2.5f;
     private float m_Timer;
 
     [SerializeField] private GameObject m_PlayerRef;
@@ -21,7 +21,6 @@ public class EnemyAccuracyController : MonoBehaviour
     private float m_ExtraOffsetMaxX = 3.5f;
     private float m_ExtraOffsetMinY = 0.6f;
     private float m_ExtraOffsetMaxY = 1.3f;
-    private float m_PlayerHeightOffset;
     private float m_PlayerWidthOffset;
     
     private EnemyBehavior enemyBehavior;
@@ -38,14 +37,11 @@ public class EnemyAccuracyController : MonoBehaviour
         m_Timer += Time.deltaTime;
         CapsuleCollider playerCollider = m_PlayerRef.GetComponent<CapsuleCollider>();
         m_PlayerWidthOffset = playerCollider.radius;
-        m_PlayerHeightOffset = playerCollider.height / 2.0f;
     }
-    
     private void ChangeSpotlightColor(Color newColor)
     {
         m_SpotLight.color = newColor;
     }
-
 
     public Vector3 FindBulletDirection(Vector3 bulletPos)
     {
@@ -60,8 +56,6 @@ public class EnemyAccuracyController : MonoBehaviour
         }
         else
         {
-            // Calculate miss offsets
-            // Calculate miss offsets with increased range
             float missOffsetX = Random.Range(-m_ExtraOffsetMaxX * 2f, m_ExtraOffsetMaxX * 2f);
             float missOffsetY = Random.Range(m_ExtraOffsetMinY * 2f, m_ExtraOffsetMaxY * 2f);
 
@@ -77,8 +71,7 @@ public class EnemyAccuracyController : MonoBehaviour
 
     private void CalculateTimeToNextHit()
     {
-        float newDelay = m_BaseHitDelay * CalculateDistance() * CalculateVelocity();
-        m_TimeToNextHit = newDelay;
+        m_TimeToNextHit = m_BaseDelay * CalculateDistance() * CalculateVelocity();
     }
 
     private float CalculateDistance()
@@ -86,12 +79,12 @@ public class EnemyAccuracyController : MonoBehaviour
         float distanceToTarget = Vector3.Distance(m_PlayerRef.transform.position, gameObject.transform.position);
         // Access m_MaxDetectionRange from enemyBehavior
         float firstPoint = (enemyBehavior.m_MaxDetectionRange / m_DistanceScaler) * 2f;
-        float SecondPoint = enemyBehavior.m_MaxDetectionRange / m_DistanceScaler;
+        float secondPoint = enemyBehavior.m_MaxDetectionRange / m_DistanceScaler;
 
         // Default modifier if player is close to the shooter
         float modifier = 0.5f;
 
-        if (distanceToTarget > SecondPoint)
+        if (distanceToTarget > secondPoint)
         {
             if (distanceToTarget > firstPoint)
             {
@@ -106,7 +99,7 @@ public class EnemyAccuracyController : MonoBehaviour
                 modifier = 0.75f;
             }
         }
-        else if (distanceToTarget < SecondPoint)
+        else if (distanceToTarget < secondPoint)
         {
             ChangeSpotlightColor(Color.red);
         }
