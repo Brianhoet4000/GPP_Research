@@ -40,5 +40,6 @@ To provide you with a visual understanding, I've included graphs below that depi
 
 
 Source:
+
 https://core.ac.uk/download/pdf/33504361.pdf
 https://www.gameaipro.com/GameAIPro3/GameAIPro3_Chapter33_Using_Your_Combat_AI_Accuracy_to_Balance_Difficulty.pdf
