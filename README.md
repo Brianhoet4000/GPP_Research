@@ -36,3 +36,9 @@ To provide you with a visual understanding, I've included graphs below that depi
 
 ![DistanceRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/987e7f99-b66f-457b-aff3-afe6256bbab1)
 ![VelocityRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/ad55ab33-c577-4af2-919f-0bcb4f91477a)
+
+
+
+Source:
+https://core.ac.uk/download/pdf/33504361.pdf
+https://www.gameaipro.com/GameAIPro3/GameAIPro3_Chapter33_Using_Your_Combat_AI_Accuracy_to_Balance_Difficulty.pdf
