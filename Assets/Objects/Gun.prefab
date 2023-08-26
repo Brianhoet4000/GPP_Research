@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletTemplate: {fileID: 3868110110073411048, guid: 2c6769b4e426d8247bf09076268e19c8, type: 3}
-  m_ClipSize: 10
-  m_FireRate: 2
+  m_ClipSize: 50
+  m_FireRate: 8
   m_FireSocket: {fileID: 8529768397515171677}
   m_PlayerRef: {fileID: 0}
 --- !u!114 &4427467298192600446

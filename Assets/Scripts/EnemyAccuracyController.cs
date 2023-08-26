@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyAccuracyController : MonoBehaviour
 {
@@ -11,16 +13,16 @@ public class EnemyAccuracyController : MonoBehaviour
     [SerializeField]
     private GameObject m_PlayerRef;
     private Rigidbody m_PlayerRigidBody;
-    private float m_ExtraOffsetMinX = 4.0f;
-    private float m_ExtraOffsetMaxX = 12.0f;
+    private float m_ExtraOffsetMinX = -3.5f;
+    private float m_ExtraOffsetMaxX = 3.5f;
     private float m_ExtraOffsetMinY = 0.6f;
     private float m_ExtraOffsetMaxY = 1.3f;
     private float m_PlayerHeightOffset;
     private float m_PlayerWidthOffset;
-
+    
     private void Awake()
     {
-        m_PlayerRigidBody = m_PlayerRef.GetComponent<Rigidbody>();    
+        m_PlayerRigidBody = m_PlayerRef.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -28,91 +30,88 @@ public class EnemyAccuracyController : MonoBehaviour
         m_Timer += Time.deltaTime;
         CapsuleCollider playerCollider = m_PlayerRef.GetComponent<CapsuleCollider>();
         m_PlayerWidthOffset = playerCollider.radius;
-        m_PlayerHeightOffset = playerCollider.height / 2.0f; //divide by two because we're aiming at the center of the player
+        m_PlayerHeightOffset = playerCollider.height / 2.0f;
     }
 
     public Vector3 FindBulletDirection(Vector3 bulletPos)
     {
-        //direction will hit the player unless changed
         Vector3 playerPos = m_PlayerRef.transform.position;
-        Vector3 direction = playerPos - bulletPos;
-        if(m_Timer >= m_TimeToNextHit)
+        Vector3 direction;
+
+        if (m_Timer >= m_TimeToNextHit)
         {
-            //allowed to hit the player, don't change direction
             m_Timer = 0.0f;
             CalculateTimeToNextHit();
+            direction = playerPos - bulletPos;  // Direction to hit the player
         }
         else
         {
-            //miss the player
-            Vector3 fakePos = playerPos;
+            // Calculate miss offsets
+            float missOffsetX = Random.Range(-m_ExtraOffsetMaxX, m_ExtraOffsetMaxX);  // Spread in X-axis
+            float missOffsetY = Random.Range(m_ExtraOffsetMinY, m_ExtraOffsetMaxY);    // Spread in Y-axis
             float missOffsetZ = Random.Range(m_PlayerWidthOffset + m_ExtraOffsetMinX, m_PlayerWidthOffset + m_ExtraOffsetMaxX);
-            //miss either to the left or right of the player
-            if (Random.Range(0, 2) % 2 == 0)
-            {
-                missOffsetZ *= -1;
-            }
-            fakePos.z += missOffsetZ;
- 
-            float missOffsetY = Random.Range(m_PlayerHeightOffset + m_ExtraOffsetMinY, m_PlayerHeightOffset + m_ExtraOffsetMaxY);
-            fakePos.y += missOffsetY;
-            direction = fakePos - bulletPos;
-        }
 
+            // Apply miss offsets to create a fake position
+            Vector3 fakePos = new Vector3(playerPos.x + missOffsetX, playerPos.y + missOffsetY, playerPos.z + missOffsetZ);
+            direction = fakePos - bulletPos;  // Direction to miss the player
+        }
 
         return direction;
     }
 
     private void CalculateTimeToNextHit()
     {
-        float newDelay = m_BaseHitDelay * CalculateDistanceModifier() * CalculateVelocityModifier();
+        float newDelay = m_BaseHitDelay * CalculateDistance() * CalculateVelocity();
         m_TimeToNextHit = newDelay;
     }
 
-    private float CalculateDistanceModifier()
+    private float CalculateDistance()
     {
         float distanceToTarget = Vector3.Distance(m_PlayerRef.transform.position, gameObject.transform.position);
         const float maxRange = 20.0f;
         const float midRange = 10.0f;
-        if (distanceToTarget > maxRange)
+
+        // Default modifier if player is close to the shooter
+        float modifier = 0.5f;
+
+        if (distanceToTarget > midRange)
         {
-            //player is far away and is safer
-            return 1.0f;
-        }
-        else if (distanceToTarget > midRange)
-        {
-            //player is slightly more in danger
-            return 0.8f;
+            if (distanceToTarget > maxRange)
+            {
+                // Player is far away and is safer
+                modifier = 1.0f;
+            }
+            else
+            {
+                // Player is slightly more in danger
+                modifier = 0.8f;
+            }
         }
 
-        //player is close to the shooter
-        return 0.5f;
-
+        return modifier;
     }
 
-    private float CalculateVelocityModifier()
+    private float CalculateVelocity()
     {
         Vector3 vectorPlayerToEnemy = gameObject.transform.position - m_PlayerRef.transform.position;
         Vector3 velocityVect = m_PlayerRigidBody.velocity;
 
         float angle = Vector3.Angle(vectorPlayerToEnemy, velocityVect);
 
-        const float closerAngle = 3.0f;
-        const float furtherAngle = 160.0f; //Vector3.Angle can never return a value greater than 180
-        if(angle > furtherAngle)
+        const float closerAngle = 45.0f;
+        const float furtherAngle = 160.0f;
+
+        if (angle > furtherAngle)
         {
-            //player is running away from the enemy
-            return 1.0f;
+            return 1.0f;  // Player is running away from the enemy
         }
 
-        if(angle < closerAngle)
+        if (angle < closerAngle)
         {
-            //player is running towards the enemy
-            return 0.5f;
+            return 0.5f;  // Player is running towards the enemy
         }
 
-        //standard amount
-        return 0.7f;
-
+        return 0.7f;  // Standard amount
     }
+
 }

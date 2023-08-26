@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]private float sensX;
-    [SerializeField]private float sensY;
+    [SerializeField]private float m_SensX;
+    [SerializeField]private float m_SensY;
 
     public Transform orientation;
 
@@ -22,8 +23,8 @@ public class CameraController : MonoBehaviour
   
     private void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_SensX;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_SensY;
 
         yRotation += mouseX;
         

@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     
     private float m_Speed = 30.0f;
    
-    private float m_LifeTime = 10.0f;
+    private float m_LifeTime = 6.0f;
    
     private int m_Damage = 2;
 
@@ -23,8 +23,7 @@ public class Bullet : MonoBehaviour
             transform.position += transform.forward * Time.deltaTime * m_Speed;
         }
     }
-
-    //static string[] RAYCAST_MASK = new string[] { "StaticLevel", "DynamicLevel" };
+    
     static string[] RAYCAST_MASK = new string[] { "Level" };
     bool WallDetection()
     {
@@ -49,20 +48,19 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-     
         //make sure not to hit own team
         if (other.tag == tag)
         {
             return;
         }
 
-        //PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        HealthComponent playerHealth = other.GetComponent<HealthComponent>();
 
-        //if (playerHealth != null)
-        //{
-        //    playerHealth.TakeDamage(m_Damage);
-        //    Kill();
-        //}
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(m_Damage);
+            Kill();
+        }
 
     }
 }

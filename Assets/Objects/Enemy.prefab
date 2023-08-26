@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerRef: {fileID: 0}
-  m_MaxDetectionRange: 30
+  m_MaxDetectionRange: 35
 --- !u!1001 &4351766016747139377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,6 +124,10 @@ PrefabInstance:
     - target: {fileID: 1313338459795473966, guid: 7d0641901c0cb74449d88a6d9c5009e2, type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104872872624386388, guid: 7d0641901c0cb74449d88a6d9c5009e2, type: 3}
+      propertyPath: m_FireRate
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8604943901346333034, guid: 7d0641901c0cb74449d88a6d9c5009e2, type: 3}
       propertyPath: m_RootOrder
