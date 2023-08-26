@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using LightType = UnityEngine.LightType;
 using Random = UnityEngine.Random;
 
 public class EnemyAccuracyController : MonoBehaviour
@@ -10,8 +13,9 @@ public class EnemyAccuracyController : MonoBehaviour
     private const float m_BaseHitDelay = 2.5f;
     private float m_Timer;
 
-    [SerializeField]
-    private GameObject m_PlayerRef;
+    [SerializeField] private GameObject m_PlayerRef;
+    [SerializeField] private float m_DistanceScaler = 3f;
+    private Light m_SpotLight; 
     private Rigidbody m_PlayerRigidBody;
     private float m_ExtraOffsetMinX = -3.5f;
     private float m_ExtraOffsetMaxX = 3.5f;
@@ -20,9 +24,13 @@ public class EnemyAccuracyController : MonoBehaviour
     private float m_PlayerHeightOffset;
     private float m_PlayerWidthOffset;
     
+    private EnemyBehavior enemyBehavior;
+    
     private void Awake()
     {
         m_PlayerRigidBody = m_PlayerRef.GetComponent<Rigidbody>();
+        enemyBehavior = GetComponent<EnemyBehavior>();
+        m_SpotLight = GetComponentInChildren<Light>(); // Find the Light component in children
     }
 
     void Update()
@@ -32,6 +40,12 @@ public class EnemyAccuracyController : MonoBehaviour
         m_PlayerWidthOffset = playerCollider.radius;
         m_PlayerHeightOffset = playerCollider.height / 2.0f;
     }
+    
+    private void ChangeSpotlightColor(Color newColor)
+    {
+        m_SpotLight.color = newColor;
+    }
+
 
     public Vector3 FindBulletDirection(Vector3 bulletPos)
     {
@@ -47,8 +61,10 @@ public class EnemyAccuracyController : MonoBehaviour
         else
         {
             // Calculate miss offsets
-            float missOffsetX = Random.Range(-m_ExtraOffsetMaxX, m_ExtraOffsetMaxX);  // Spread in X-axis
-            float missOffsetY = Random.Range(m_ExtraOffsetMinY, m_ExtraOffsetMaxY);    // Spread in Y-axis
+            // Calculate miss offsets with increased range
+            float missOffsetX = Random.Range(-m_ExtraOffsetMaxX * 2f, m_ExtraOffsetMaxX * 2f);
+            float missOffsetY = Random.Range(m_ExtraOffsetMinY * 2f, m_ExtraOffsetMaxY * 2f);
+
             float missOffsetZ = Random.Range(m_PlayerWidthOffset + m_ExtraOffsetMinX, m_PlayerWidthOffset + m_ExtraOffsetMaxX);
 
             // Apply miss offsets to create a fake position
@@ -68,26 +84,33 @@ public class EnemyAccuracyController : MonoBehaviour
     private float CalculateDistance()
     {
         float distanceToTarget = Vector3.Distance(m_PlayerRef.transform.position, gameObject.transform.position);
-        const float maxRange = 20.0f;
-        const float midRange = 10.0f;
+        // Access m_MaxDetectionRange from enemyBehavior
+        float firstPoint = (enemyBehavior.m_MaxDetectionRange / m_DistanceScaler) * 2f;
+        float SecondPoint = enemyBehavior.m_MaxDetectionRange / m_DistanceScaler;
 
         // Default modifier if player is close to the shooter
         float modifier = 0.5f;
 
-        if (distanceToTarget > midRange)
+        if (distanceToTarget > SecondPoint)
         {
-            if (distanceToTarget > maxRange)
+            if (distanceToTarget > firstPoint)
             {
                 // Player is far away and is safer
+                ChangeSpotlightColor(Color.green);
                 modifier = 1.0f;
             }
             else
             {
                 // Player is slightly more in danger
-                modifier = 0.8f;
+                ChangeSpotlightColor(Color.yellow);
+                modifier = 0.75f;
             }
         }
-
+        else if (distanceToTarget < SecondPoint)
+        {
+            ChangeSpotlightColor(Color.red);
+        }
+        
         return modifier;
     }
 

@@ -202,8 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 10
-  m_JumpForce: 5
-  m_Gravity: 9.81
+  m_JumpForce: 10
   m_InputDeadZone: 0.01
 --- !u!136 &6964537578271337549
 CapsuleCollider:
@@ -248,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: 10
+  m_UIHealth: {fileID: 0}
 --- !u!1 &8827943444804393284
 GameObject:
   m_ObjectHideFlags: 0

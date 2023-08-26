@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class GunFunctionality : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject m_BulletTemplate = null;
-    [SerializeField] 
-    private int m_ClipSize = 8;
-    [SerializeField] 
-    private float m_FireRate = 1.0f;
-    [SerializeField] 
-    private Transform m_FireSocket;
-    [SerializeField]
-    private GameObject m_PlayerRef;
+    [SerializeField] private GameObject m_BulletTemplate = null;
+    [SerializeField] private int m_ClipSize = 8;
+    [SerializeField] private float m_FireRate = 1.0f;
+    [SerializeField] private Transform m_FireSocket;
 
     private int m_CurrentAmmo = 0;
     private float m_FireTimer = 0.0f;

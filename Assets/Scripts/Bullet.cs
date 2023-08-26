@@ -5,11 +5,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     
-    private float m_Speed = 30.0f;
-   
-    private float m_LifeTime = 6.0f;
-   
-    private int m_Damage = 2;
+    [SerializeField] private float m_Speed = 30.0f;
+    [SerializeField] private float m_LifeTime = 6.0f;
+    [SerializeField] private int m_Damage = 2;
 
     private void Awake()
     {
