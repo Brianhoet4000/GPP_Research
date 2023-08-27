@@ -1,7 +1,7 @@
 # Realistic and Engaging Enemy AI Shooting Accuracy in Games
 
 ## Intro
-When it comes to making enemy AI for first-person shooter games, it's easy to turn them into unstoppable killing machines. But that wouldn't be fair to players. To offer players a balanced challenge, enemies need to miss some shots intentionally. This project aimed to figure out how to design shooting AI that gives players a fair experience while also keeping the fact that missed shots are intentional less obvious. As someone who loves playing single-player games, I set out on this journey of exploration.
+When it comes to making enemy AI for first-person shooter games, it's easy to turn them into unstoppable killing machines. But that wouldn't be fair to players. To offer players a balanced challenge, enemies need to miss some shots intentionally. This project aims to figure out how to design shooting AI that gives players a fair experience while also keeping the fact that missed shots are intentional less obvious. As someone who loves playing single-player games, I set out on this journey of exploration.
 
 ## Theory
 
@@ -37,7 +37,13 @@ To provide you with a visual understanding, I've included graphs below that depi
 ![DistanceRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/987e7f99-b66f-457b-aff3-afe6256bbab1)
 ![VelocityRule](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/ad55ab33-c577-4af2-919f-0bcb4f91477a)
 
+## Conclusion
 
+The implementation has worked well. It's clear both when you play the build and from the graph below. The turret fires 40 rounds in a magazine and shoots at a rate of 6 rounds per second. At long range, it hits 5 rounds, 7 rounds at medium range, and an impressive 9 rounds up close.
+
+This setup has great potential, but getting the right feel that's fair to the player requires careful tuning. You can also add more rules to adjust the hit delay, making the system even more unique and adaptable.
+
+![Result](https://github.com/Brianhoet4000/ggp_Research/assets/113976082/4860573b-408f-4cfc-9391-e28c50b96ca8)
 
 Source:
 
