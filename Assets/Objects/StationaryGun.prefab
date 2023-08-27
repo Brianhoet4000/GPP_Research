@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BulletTemplate: {fileID: 3868110110073411048, guid: 2c6769b4e426d8247bf09076268e19c8, type: 3}
-  m_ClipSize: 50
-  m_FireRate: 8
+  m_ClipSize: 40
+  m_FireRate: 6
   m_FireSocket: {fileID: 4564843569819177598}
 --- !u!114 &4581745793393582985
 MonoBehaviour:
